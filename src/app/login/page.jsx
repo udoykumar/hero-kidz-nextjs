@@ -4,8 +4,12 @@ import SocialButton from "@/components/auth/SocialButton";
 import Link from "next/link";
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,6 +18,18 @@ export default function LoginPage() {
     const password = event.password.value;
     const form = { email, password };
     console.log(form);
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    console.log(result);
+    if (!result.ok) {
+      Swal.fire("error", "Email password not matched", "error");
+    } else {
+      Swal.fire("success", "Welcome Hero kidz Hub", "success");
+      router.push("/");
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
