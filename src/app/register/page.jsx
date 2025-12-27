@@ -2,7 +2,8 @@
 
 import { postUser } from "@/actions/server/auth";
 import SocialButton from "@/components/auth/SocialButton";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
   FaGoogle,
@@ -12,9 +13,12 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const url = params.get("callbackUrl") || "/";
   const [showPassword, setShowPassword] = useState(false);
   // const [form, setForm] = useState({
   //   name: "",
@@ -33,9 +37,17 @@ const RegisterPage = () => {
     const form = { name, email, password };
     console.log(form);
     const result = await postUser(form);
+    console.log(result);
     if (result.acknowledged) {
-      alert("successfull.please login");
-      router.push("/login");
+      // router.push("/login");
+      Swal.fire("success", "Welcome Hero kidz Hub", "success");
+      const result = await signIn("credentials", {
+        email,
+        password,
+        callbackUrl: url,
+      });
+    } else {
+      Swal.fire("error", "Email password not matched", "error");
     }
   };
   return (

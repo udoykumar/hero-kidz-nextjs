@@ -1,15 +1,16 @@
 "use client";
-
 import SocialButton from "@/components/auth/SocialButton";
 import Link from "next/link";
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const params = useSearchParams();
+  const url = params.get("callbackUrl") || "/";
   const [show, setShow] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +22,14 @@ export default function LoginPage() {
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      //   redirect: false,
+      callbackUrl: params.get("callbackUrl") || "",
     });
     console.log(result);
     if (!result.ok) {
       Swal.fire("error", "Email password not matched", "error");
     } else {
       Swal.fire("success", "Welcome Hero kidz Hub", "success");
-      router.push("/");
     }
   };
   return (
@@ -105,7 +106,7 @@ export default function LoginPage() {
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <Link
-            href={"/register"}
+            href={`/register?callbackUrl=${url}`}
             className="text-indigo-600 font-medium hover:underline"
           >
             register
