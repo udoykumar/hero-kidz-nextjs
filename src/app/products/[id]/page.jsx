@@ -1,8 +1,36 @@
 import { getSingleProduct } from "@/actions/server/product";
+import CartButton from "@/components/buttons/CartButton";
 
 import Image from "next/image";
 import React from "react";
 import { FaCartPlus, FaStar } from "react-icons/fa";
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = await getSingleProduct(id);
+  return {
+    title: "Asset Details",
+    description: "View asset information, status, and assignment history.",
+
+    openGraph: {
+      title: "Asset Details | AssetVerse",
+      description: "Detailed view of company asset information and lifecycle.",
+      images: [
+        {
+          url: "https://ibb.co.com/GQSnL7z7", // product page preview
+          width: 1200,
+          height: 630,
+          alt: "AssetVerse Product Page",
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      images: ["https://ibb.co.com/GQSnL7z7"],
+    },
+  };
+}
 
 const ProductDetails = async ({ params }) => {
   const { id } = await params;
@@ -66,6 +94,7 @@ const ProductDetails = async ({ params }) => {
         </div>
 
         {/* Actions */}
+        <CartButton product={product} />
       </div>
       <div className="col-span-full">
         {/* Description */}
