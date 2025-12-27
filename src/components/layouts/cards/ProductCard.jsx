@@ -1,3 +1,4 @@
+import CartButton from "@/components/buttons/CartButton";
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar, FaShoppingCart } from "react-icons/fa";
@@ -46,15 +47,13 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Add to cart */}
-        <button className="btn btn-primary btn-sm mt-3 gap-2">
-          <FaShoppingCart />
-          Add to Cart
-        </button>
+        <CartButton product={{ ...product, _id: _id.toString() }} />
+
         <Link
-            href={`/products/${_id}`}
-          className="btn btn-primary btn-sm mt-3 gap-2"
+          href={`/products/${_id}`}
+          className="btn btn-outline hover:btn-primary "
         >
-          <FcViewDetails />
+          <FcViewDetails size={20} />
           View Details
         </Link>
       </div>

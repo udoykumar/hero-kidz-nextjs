@@ -22,14 +22,19 @@ export default function LoginPage() {
     const result = await signIn("credentials", {
       email,
       password,
-      //   redirect: false,
+      redirect: false,
       callbackUrl: params.get("callbackUrl") || "",
     });
     console.log(result);
     if (!result.ok) {
-      Swal.fire("error", "Email password not matched", "error");
+      Swal.fire(
+        "error",
+        "Email password not matched. Try Google Login/Register",
+        "error"
+      );
     } else {
       Swal.fire("success", "Welcome Hero kidz Hub", "success");
+      router.push(url);
     }
   };
   return (

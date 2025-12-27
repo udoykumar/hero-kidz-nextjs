@@ -10,7 +10,7 @@ const SocialButton = () => {
   console.log();
   const handleSignIn = async () => {
     const result = await signIn("google", {
-      redirect: "false",
+      //   redirect: "false",
       callbackUrl: searchParams.get("callbackUrl") || "/",
     });
     console.log(result);

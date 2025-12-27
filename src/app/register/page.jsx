@@ -39,13 +39,16 @@ const RegisterPage = () => {
     const result = await postUser(form);
     console.log(result);
     if (result.acknowledged) {
-      // router.push("/login");
-      Swal.fire("success", "Welcome Hero kidz Hub", "success");
       const result = await signIn("credentials", {
         email,
         password,
+        redirect: false,
         callbackUrl: url,
       });
+      if (result.ok) {
+        Swal.fire("success", "Welcome Hero kidz Hub", "success");
+        router.push(url);
+      }
     } else {
       Swal.fire("error", "Email password not matched", "error");
     }
