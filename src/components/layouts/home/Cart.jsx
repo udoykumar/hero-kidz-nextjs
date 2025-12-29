@@ -2,20 +2,11 @@
 
 import { useMemo, useState } from "react";
 import CartItem from "../cards/CartItem";
+import Link from "next/link";
+import OrderSummary from "@/components/OrderSummary";
 
 const Cart = ({ cartItem = [] }) => {
   const [items, setItems] = useState(cartItem);
-
-  const totalItems = useMemo(
-    () => items.reduce((sum, item) => sum + item.quantity, 0),
-    [items]
-  );
-
-  const totalPrice = useMemo(
-    () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [items]
-  );
-
   const removeItem = (id) => {
     setItems((prevItem) => prevItem.filter((item) => item._id !== id));
   };
@@ -27,11 +18,20 @@ const Cart = ({ cartItem = [] }) => {
       )
     );
   };
+  const totalItems = useMemo(
+    () => items.reduce((sum, item) => sum + item.quantity, 0),
+    [items]
+  );
 
-  const handleConfirm = () => {
-    console.log("Confirmed Items:", items);
-    alert("Order Confirmed ✅");
-  };
+  const totalPrice = useMemo(
+    () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [items]
+  );
+
+  // const handleConfirm = () => {
+  //   console.log("Confirmed Items:", items);
+  //   alert("Order Confirmed ✅");
+  // };
 
   return (
     <div>
@@ -42,7 +42,7 @@ const Cart = ({ cartItem = [] }) => {
 
       <div className="flex gap-6">
         {/* LEFT - CART ITEMS */}
-        <div className="flex-[3] space-y-5">
+        <div className="flex-3 space-y-5">
           {items.map((item) => (
             <CartItem
               key={item._id.toString()}
@@ -61,7 +61,7 @@ const Cart = ({ cartItem = [] }) => {
             </h2>
 
             {/* PRODUCT LIST */}
-            <div className="space-y-3 max-h-84 overflow-auto">
+            <div className="space-y-3 max-h-70 overflow-auto">
               {items.map((item) => (
                 <div
                   key={item._id}
@@ -91,13 +91,16 @@ const Cart = ({ cartItem = [] }) => {
             </div>
 
             {/* CONFIRM BUTTON */}
-            <button
-              onClick={handleConfirm}
-              disabled={!items.length}
-              className="mt-5 w-full bg-primary text-white py-2 rounded-lg font-semibold hover:opacity-90 disabled:opacity-50"
-            >
-              Confirm Order
-            </button>
+            <div className="mt-5 w-full">
+              {" "}
+              <Link
+                href={"checkout"}
+                disabled={!items.length}
+                className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:opacity-90 disabled:opacity-50"
+              >
+                Confirm Order
+              </Link>
+            </div>
           </div>
         </div>
       </div>

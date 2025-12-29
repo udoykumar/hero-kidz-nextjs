@@ -9,10 +9,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <div className="space-y-20">
-      <p className="text-3xl text-primary">
-        <Test />
-      </p>
-      <p className="text-3xl text-primary">{JSON.stringify(session)}</p>
+      {/* <p className="text-3xl text-primary">{JSON.stringify(session)}</p> */}
       <section>
         <Banner />
       </section>
