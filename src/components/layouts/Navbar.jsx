@@ -1,23 +1,23 @@
-import React from "react";
-import Logo from "./Logo";
-import Link from "next/link";
-import NavLink from "./buttons/NavLink";
-import { FiShoppingCart } from "react-icons/fi";
-import AuthButtons from "../buttons/AuthButtons";
+import React from 'react';
+import Logo from './Logo';
+import Link from 'next/link';
+import NavLink from './buttons/NavLink';
+import { FiShoppingCart } from 'react-icons/fi';
+import AuthButtons from '../buttons/AuthButtons';
 const Navbar = () => {
   const nav = (
     <>
       <li>
-        <NavLink href={"/"}>Home</NavLink>
+        <NavLink href={'/'}>Home</NavLink>
       </li>
       <li>
-        <NavLink href={"/products"}>Products</NavLink>
+        <NavLink href={'/products'}>Products</NavLink>
       </li>
       <li>
-        <NavLink href={"/blog"}>Blog</NavLink>
+        <NavLink href={'/blog'}>Blog</NavLink>
       </li>
       <li>
-        <NavLink href={"/contact"}>Contact</NavLink>
+        <NavLink href={'/contact'}>Contact</NavLink>
       </li>
     </>
   );
@@ -58,7 +58,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end space-x-4">
-        <Link href={"/cart"} className="btn btn-primary">
+        <Link href={'/cart'} className="btn btn-primary">
           <FiShoppingCart size={30} />
         </Link>
         <AuthButtons />
